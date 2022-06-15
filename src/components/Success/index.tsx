@@ -29,9 +29,8 @@ export function Success({onSendAnotherFeedback}: Props) {
       Quero enviar outro
   </Text>
 </TouchableOpacity>
-    s
+    
     <Copyright />
-
     </View>
   );
 }

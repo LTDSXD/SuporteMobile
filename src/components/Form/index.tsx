@@ -34,7 +34,7 @@ export function Form({ feedbackType, onFeedbackCanceled,  onFeedbackSent  }: Pro
       quality: 0.8
     })
     .then(uri => setScreenshot(uri))
-    .catch(erro => console.log(erro));
+    .catch(error => console.log(error));
   }
 
   function handleScreenshotRemove(){
@@ -42,16 +42,18 @@ export function Form({ feedbackType, onFeedbackCanceled,  onFeedbackSent  }: Pro
   }
 
   async function handleSendFeedback(){
-    if(isSendingFeedback){
+    if (isSendingFeedback) {
       return;
     }
 
     setIsSendingFeedback(true);
 
+    const screenshotBase64 = screenshot && await FileSystem.readAsStringAsync(screenshot, { encoding: 'base64'});
+    
     try{
-      await api.post('/feedback', {
+      await api.post('/feedbacks', {
         type: feedbackType,
-        screenshot,
+        screenshot:`data:image/png;base64, ${screenshotBase64}`,
         comment 
       });
 
